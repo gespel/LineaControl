@@ -1,10 +1,10 @@
 package main.kotlin
 
 class Networking {
-    fun sendToDevice(input: String, ip: String) {
+    fun sendToDevice(ip: String, port: Int, input: String) {
         /*val socket = Socket(ip, 51456)
         val dout = DataOutputStream(socket.getOutputStream())*/
-        println("$ip : Sending to device:\n$input")
+        println("[$ip:$port] Sending to device:\n$input")
         //dout.writeUTF(input)
         //dout.flush()
         //dout.close()
