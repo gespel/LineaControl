@@ -2,11 +2,13 @@ package main.kotlin
 
 fun main(args: Array<String>) {
     var m = LineaControl()
-    var sleeptime: Long = 300
+    var sleeptime: Long = 3000
     while (true) {
-        m.setMute(Channel.A, true)
+        m.setGain(Channel.InA, -3f)
+        m.setMute(Channel.InA, true)
+        m.setEq(Channel.Out1, 1, 440.0f, -3f, 1f)
         Thread.sleep(sleeptime)
-        m.setMute(Channel.A, false)
+        /*m.setMute(Channel.A, false)
         m.setMute(Channel.B, true)
         Thread.sleep(sleeptime)
         m.setMute(Channel.B, false)
@@ -15,6 +17,6 @@ fun main(args: Array<String>) {
         m.setMute(Channel.C, false)
         m.setMute(Channel.D, true)
         Thread.sleep(sleeptime)
-        m.setMute(Channel.D, false)
+        m.setMute(Channel.D, false)*/
     }
 }
