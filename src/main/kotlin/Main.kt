@@ -7,6 +7,7 @@ fun main(args: Array<String>) {
         m.setGain(Channel.InA, -3f)
         m.setMute(Channel.InA, true)
         m.setEq(Channel.Out1, 1, 440.0f, -3f, 1f)
+        m.getInputMeter(Channel.InA)
         Thread.sleep(sleeptime)
         /*m.setMute(Channel.A, false)
         m.setMute(Channel.B, true)

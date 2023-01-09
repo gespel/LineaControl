@@ -11,4 +11,8 @@ class Networking(ip: String) {
         //dout.close()
         //socket.close()
     }
+    fun sendToDeviceAndReceive(input: String): String {
+        println("[$this.ip:$port] Sending to device and waiting for response:\n$input")
+        return ""
+    }
 }
