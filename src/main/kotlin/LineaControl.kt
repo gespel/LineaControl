@@ -26,7 +26,23 @@ class LineaControl {
     }
 
     fun getInputMeter(channel: Channel): Float {
-        var recv: String = n.sendToDeviceAndReceive("\$GET $channel/Meter\r")
+        var recv: String? = n.sendToDeviceAndReceive("\$GET $channel/Meter\r")
         return 0.0f
+    }
+    fun downloadDeviceSettings(): DeviceSettings {
+        var inC = arrayOf(
+            InputChannel(Channel.InA,0.0f),
+            InputChannel(Channel.InB,0.0f),
+            InputChannel(Channel.InC,0.0f),
+            InputChannel(Channel.InD,0.0f)
+        )
+        var outC = arrayOf(
+            OutputChannel(Channel.Out1, arrayOf(
+                EqSetting(440.0f, -3f, 1.0f),
+                EqSetting(880f, -3f, 1f)
+            ), -3f),
+        )
+        var out = DeviceSettings("Test", "127.0.0.1", inC, outC)
+        return out
     }
 }

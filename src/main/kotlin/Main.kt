@@ -1,8 +1,8 @@
 package main.kotlin
 
 fun main(args: Array<String>) {
-    var m = LineaControl()
-    var sleeptime: Long = 3000
+    val m = LineaControl()
+    val sleeptime: Long = 3000
     while (true) {
         m.setGain(Channel.InA, -3f)
         m.setMute(Channel.InA, true)
