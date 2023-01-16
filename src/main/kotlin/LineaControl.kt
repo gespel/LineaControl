@@ -1,7 +1,7 @@
 package main.kotlin
 
 class LineaControl {
-    var n = Networking("127.0.0.1")
+    var n = Networking("192.168.2.133")
     fun setMute(channel: Channel, value: Boolean) {
         var sendValue = "no"
         if(value) {
@@ -10,7 +10,14 @@ class LineaControl {
         n.sendToDevice("\$SET $channel/Mute $sendValue\r")
     }
     fun setGain(channel: Channel, value: Float) {
-        n.sendToDevice("\$SET $channel/Gain $value dB\r")
+        n.sendToDevice("\$SET $channel/Gain ${value}dB\r")
+        //n.sendToDevice("\$SET Out1/Gain ${value}dB\r")
+    }
+    fun setDelay(channel: Channel, value: Float) {
+        n.sendToDevice("\$SET InA/Delay ${value}ms\r")
+    }
+    fun getVersion() {
+        n.sendToDevice("\$GET Version\r")
     }
     fun reversePolarity(channel: Channel, value: Boolean) {
         var sendValue = "no"
@@ -20,9 +27,9 @@ class LineaControl {
         n.sendToDevice("\$SET $channel/Pol $sendValue\r")
     }
     fun setEq(channel: Channel, eqNumber: Int, freq: Float, gain: Float, q: Float) {
-        n.sendToDevice("\$SET $channel/Eq${eqNumber}Freq $freq\r")
-        n.sendToDevice("\$SET $channel/Eq${eqNumber}Gain $gain\r")
-        n.sendToDevice("\$SET $channel/Eq${eqNumber}Q $q\r")
+        //n.sendToDevice("\$SET $channel/Eq${eqNumber}Freq $freq Hz\r")
+        n.sendToDevice("\$SET $channel/Eq${eqNumber}Gain ${gain}dB\r")
+        //n.sendToDevice("\$SET $channel/Eq${eqNumber}Q $q\r")
     }
 
     fun getInputMeter(channel: Channel): Float {
