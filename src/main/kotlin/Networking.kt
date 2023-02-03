@@ -17,22 +17,24 @@ class Networking(ip: String) {
         println("[INFO][$ip:$port] Sending to device:\n$input")
         try {
             dout.write(input.toByteArray())
-            val receivedMessage = inp.readLine()
-            println("Received message: $receivedMessage")
         }
         catch (e: Exception) {
             println("[ERROR] paket could not be sent to device!")
         }
     }
-    fun sendToDeviceAndReceive(input: String): String? {
+    fun sendToDeviceAndReceive(input: String): String {
+        println("[INFO][$ip:$port] Sending to device:\n$input")
+        var receivedMessage: String
         try {
-            println("[INFO][$ip:$port] Sending to device and waiting for response:\n$input")
-            return ""
+            dout.write(input.toByteArray())
+            receivedMessage = inp.readLine()
+            println("Received message: $receivedMessage")
         }
         catch (e: Exception) {
             println("[ERROR] paket could not be sent to device!")
+            receivedMessage = null.toString()
         }
-        return null
+        return receivedMessage
     }
     fun closeConnection() {
         dout.close()

@@ -19,6 +19,46 @@ class LineaControl {
     fun getVersion() {
         n.sendToDevice("\$GET Version\r")
     }
+    fun sendCommandAndReceive(cmd: String): String {
+        return n.sendToDeviceAndReceive(cmd + "\r")
+    }
+    fun getMeter() {
+        n.sendToDevice("\$GET In2/Meter\r")
+    }
+
+    fun muteAllInputs() {
+        this.setMute(Channel.InA, true)
+        this.setMute(Channel.InB, true)
+        this.setMute(Channel.InC, true)
+        this.setMute(Channel.InD, true)
+    }
+    fun unmuteAllInputs() {
+        this.setMute(Channel.InA, false)
+        this.setMute(Channel.InB, false)
+        this.setMute(Channel.InC, false)
+        this.setMute(Channel.InD, false)
+    }
+    fun muteAllOutputs() {
+        this.setMute(Channel.Out1, true)
+        this.setMute(Channel.Out2, true)
+        this.setMute(Channel.Out3, true)
+        this.setMute(Channel.Out4, true)
+        this.setMute(Channel.Out5, true)
+        this.setMute(Channel.Out6, true)
+        this.setMute(Channel.Out7, true)
+        this.setMute(Channel.Out8, true)
+    }
+
+    fun unmuteAllOutputs() {
+        this.setMute(Channel.Out1, false)
+        this.setMute(Channel.Out2, false)
+        this.setMute(Channel.Out3, false)
+        this.setMute(Channel.Out4, false)
+        this.setMute(Channel.Out5, false)
+        this.setMute(Channel.Out6, false)
+        this.setMute(Channel.Out7, false)
+        this.setMute(Channel.Out8, false)
+    }
     fun reversePolarity(channel: Channel, value: Boolean) {
         var sendValue = "no"
         if(value) {
