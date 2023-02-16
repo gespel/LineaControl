@@ -1,7 +1,10 @@
-package main.kotlin
+package lineacontrol.core
 
-class LineaControl {
-    var n = Networking("192.168.2.133")
+class LineaControl(ip: String, verbose: Boolean) {
+    var n = Networking(ip)
+    init {
+        n.setNetworkVerbosity(verbose)
+    }
     fun setMute(channel: Channel, value: Boolean) {
         var sendValue = "no"
         if(value) {
@@ -22,8 +25,8 @@ class LineaControl {
     fun sendCommandAndReceive(cmd: String): String {
         return n.sendToDeviceAndReceive(cmd + "\r")
     }
-    fun getMeter() {
-        n.sendToDevice("\$GET In2/Meter\r")
+    fun getMeter(channel: Channel) {
+        n.sendToDevice("\$GET $channel/Meter\r")
     }
 
     fun muteAllInputs() {
@@ -73,8 +76,14 @@ class LineaControl {
     }
 
     fun getInputMeter(channel: Channel): Float {
-        var recv: String? = n.sendToDeviceAndReceive("\$GET $channel/Meter\r")
-        return 0.0f
+        val recv: String? = n.sendToDeviceAndReceive("\$GET $channel/Meter\r")
+        val out = recv?.split(" ")?.get(2)?.dropLast(2)
+        return out?.toFloat() ?: 0.0f
+    }
+    fun getInputGain(channel: Channel): Float {
+        val recv: String? = n.sendToDeviceAndReceive("\$GET $channel/Gain\r")
+        val out = recv?.split(" ")?.get(2)?.dropLast(2)
+        return out?.toFloat() ?: 0.0f
     }
     fun downloadDeviceSettings(): DeviceSettings {
         var inC = arrayOf(
@@ -84,7 +93,8 @@ class LineaControl {
             InputChannel(Channel.InD,0.0f)
         )
         var outC = arrayOf(
-            OutputChannel(Channel.Out1, arrayOf(
+            OutputChannel(
+                Channel.Out1, arrayOf(
                 EqSetting(440.0f, -3f, 1.0f),
                 EqSetting(880f, -3f, 1f)
             ), -3f),
